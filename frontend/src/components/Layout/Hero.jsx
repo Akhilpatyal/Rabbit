@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import heroImg from "../../assets/rabbit-hero.webp";
+import GenderCollectionSection from "../../components/Products/GenderCollectionSection";
 const Hero = () => {
   return (
+    <>
     <section className="relative">
       <img
         src={heroImg}
@@ -25,6 +27,8 @@ const Hero = () => {
         </div>
       </div>
     </section>
+    <GenderCollectionSection/>
+    </>
   );
 };
 

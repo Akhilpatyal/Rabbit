@@ -34,16 +34,16 @@ const Fotter = () => {
           <h3 className="text-lg text-gray-800 mb-4">Shop</h3>
           <ul className="space-y-2 text-gray-600">
             <li>
-              <Link to ="#" className="hover:text-gray-500 transition-colors" > Men's Top Wear</Link>
+              <Link to ="#" className="hover:text-gray-500 transition-colors" > Men Top Wear</Link>
             </li>
             <li>
-              <Link to ="#" className="hover:text-gray-500 transition-colors" > Women's Top Wear</Link>
+              <Link to ="#" className="hover:text-gray-500 transition-colors" > Women Top Wear</Link>
             </li>
             <li>
-              <Link to ="#" className="hover:text-gray-500 transition-colors" > Men's Bottom Wear</Link>
+              <Link to ="#" className="hover:text-gray-500 transition-colors" > Men Bottom Wear</Link>
             </li>
             <li>
-              <Link to ="#" className="hover:text-gray-500 transition-colors" > Women's bottom Wear</Link>
+              <Link to ="#" className="hover:text-gray-500 transition-colors" > Women bottom Wear</Link>
             </li>
           </ul>
         </div>
@@ -81,7 +81,7 @@ const Fotter = () => {
       </div>
       {/* Footer bottom */}
       <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200pt-2">
-        <p className="text-gray-500 text-sm tracking-tighter text-center">@ 2025,Developer's Guy All Right Reserver </p>
+        <p className="text-gray-500 text-sm tracking-tighter text-center">@ 2025,Developers Guy All Right Reserver </p>
       </div>
     </footer>
   );
