@@ -8,11 +8,11 @@ const Paypal = ( {amount,onSuccess,onError}) => {
     <PayPalScriptProvider
       options={{
         "client-id":
-          "AY65Nfxsntua4VwPyb-FACjZGWDH_rA73s8JSX1C_-1K0U7P5jm-9UW2_vQhzwmAAgqM51x7WxRMqmqP",
+          import.meta.env.VITE_PAYPAL_CLIENT_ID,
       }}
     >
 
-<PayPalButtons  
+<PayPalButtons    
     style={{layout:"vertical"}}
     createOrder={(data,actions)=>{
         return actions.order.create({

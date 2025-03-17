@@ -10,6 +10,7 @@ import ProductDetails from "./components/Products/ProductDetails";
 import CheckOut from "./components/Cart/CheckOut";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
+import MyOrderPage from "./pages/MyOrderPage";
 function App() {
   return (
     <BrowserRouter future={{v7_startTransition:true}}>
@@ -25,6 +26,7 @@ function App() {
           <Route path="checkout" element={<CheckOut />}/>
           <Route path="order-confirmation" element={<OrderConfirmation />}/>
           <Route path="order/:id" element={<OrderDetailsPage />}/>
+          <Route path="/my-orders" element={<MyOrderPage />}/>
         </Route>
         
       </Routes>
