@@ -54,6 +54,12 @@ const Navbar = () => {
 
         {/* right --- icons */}
         <div className="flex items-center space-x-4">
+          <Link
+            to="/admin"
+            className="block bg-black rounded text-sm text-white p-1"
+          >
+            Admin
+          </Link>
           <Link to="/profile" className="hover:text-black">
             <HiOutlineUsers className="h-6 w-6 text-gray-700" />
           </Link>
@@ -82,17 +88,40 @@ const Navbar = () => {
       >
         <div className="flex justify-end p-4">
           <button onClick={toggleNavDrawer}>
-            <GiCrossMark className="h-6 w-6 text-gray-600"/>
+            <GiCrossMark className="h-6 w-6 text-gray-600" />
           </button>
         </div>
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4">Menu</h2>
           <nav className="space-y-4">
-            <Link to='#' onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">Men</Link>
-            <Link to='#' onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">Women</Link>
-            <Link to='#' onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">Topwear</Link>
-            <Link to='#' onClick={toggleNavDrawer} className="block text-gray-600 hover:text-black">Bottom Wear</Link>
-            
+            <Link
+              to="#"
+              onClick={toggleNavDrawer}
+              className="block text-gray-600 hover:text-black"
+            >
+              Men
+            </Link>
+            <Link
+              to="#"
+              onClick={toggleNavDrawer}
+              className="block text-gray-600 hover:text-black"
+            >
+              Women
+            </Link>
+            <Link
+              to="#"
+              onClick={toggleNavDrawer}
+              className="block text-gray-600 hover:text-black"
+            >
+              Topwear
+            </Link>
+            <Link
+              to="#"
+              onClick={toggleNavDrawer}
+              className="block text-gray-600 hover:text-black"
+            >
+              Bottom Wear
+            </Link>
           </nav>
         </div>
       </div>

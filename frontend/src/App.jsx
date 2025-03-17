@@ -11,6 +11,7 @@ import CheckOut from "./components/Cart/CheckOut";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import MyOrderPage from "./pages/MyOrderPage";
+import AdminLayout from "./components/Admin/AdminLayout";
 function App() {
   return (
     <BrowserRouter future={{v7_startTransition:true}}>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/my-orders" element={<MyOrderPage />}/>
         </Route>
         
+          <Route path="/admin" element={<AdminLayout />}/>
       </Routes>
     </BrowserRouter>
   );
