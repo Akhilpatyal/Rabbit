@@ -50,7 +50,7 @@ const AdminSlidebar = () => {
           <span>Orders</span>
         </NavLink>
         <NavLink
-          to="/admin/orders"
+          to="/"
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
