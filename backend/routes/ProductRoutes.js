@@ -147,4 +147,29 @@ router.delete("/:id", protect, admin,async(req,res)=>{
     }
 
 })
+
+
+
+// get all the product with query filter
+router.get("/",async(req,res)=>{
+  try {
+    const{
+      minPrice,
+      mmaxPrice,
+      discountPrice,
+      sortBy,
+      category,
+      brand,
+      size,
+      color,
+      collection,
+      material,
+      gender,
+     search
+    }=req.query;
+  } catch (error) {
+    
+  }
+})
+
 export default router;
