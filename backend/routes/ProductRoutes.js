@@ -181,7 +181,7 @@ router.get("/", async (req, res) => {
       query.sizes = { $in: size.split(",") };
     }
     if (color) {
-      query.colors = { $in:color.split(",")};
+      query.colors = { $in: color.split(",") };
     }
     if (gender) {
       query.gender = gender;
@@ -196,46 +196,82 @@ router.get("/", async (req, res) => {
       }
     }
     if (search) {
-      query.$or=[
-          {name:{$regex:search,$options:"i"}},
-          {description:{$regex:search,$options:"i"}},
-      ]
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
     }
 
     // sort logic
     let sort = {};
     if (sortBy) {
-      switch(sortBy){
+      switch (sortBy) {
         case "priceAsc":
-          sort={price:1};
+          sort = { price: 1 };
           break;
         case "priceDesc":
-          sort={price:-1};
+          sort = { price: -1 };
           break;
         case "popularity":
-          sort={rating:-1};
+          sort = { rating: -1 };
           break;
-          default:
-            break;
+        default:
+          break;
       }
-      
     }
 
-
     // fetch product and apply sorting limit
-    let products = await Product.find(query).sort(sort).limit(Number(req.query.limit) || 0);
+    let products = await Product.find(query)
+      .sort(sort)
+      .limit(Number(req.query.limit) || 0);
 
     res.json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).send("server error")
-    
+    res.status(500).send("server error");
+  }
+});
+
+//  /api/products/:id to get product by id
+//access will be public
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).send("product not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("server error");
+  }
+});
+
+// lets go for similar products
+router.get("/similar/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const product =await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const similarProducts = await Product.find({
+      _id: { $ne: id }, //Exclude the current product id
+      gender: product.gender,
+      category: product.category,
+    }).limit(4);
+
+    res.json(similarProducts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("server error");
   }
 });
 
 export default router;
-
-
 
 // filter logic explain
 // Ye API products fetch karne ke liye hai, jisme filters, sorting aur searching ka support diya gaya hai.
