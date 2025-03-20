@@ -126,36 +126,31 @@ router.put("/:id", protect, admin, async (req, res) => {
   }
 });
 
-
 // delete a product from database
-router.delete("/:id", protect, admin,async(req,res)=>{
-    // find the product
-    try {
-        const product=await Product.findById(req.params.id);
+router.delete("/:id", protect, admin, async (req, res) => {
+  // find the product
+  try {
+    const product = await Product.findById(req.params.id);
 
-        if (product) {
-            // remove from the database
-            await product.deleteOne();
-            res.json({ message: "Product deleted successfully" });
-        }else{
-            res.status(401).json({message:"Product not found"})
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: "Error deleting product" });
-        
+    if (product) {
+      // remove from the database
+      await product.deleteOne();
+      res.json({ message: "Product deleted successfully" });
+    } else {
+      res.status(401).json({ message: "Product not found" });
     }
-
-})
-
-
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error deleting product" });
+  }
+});
 
 // get all the product with query filter
-router.get("/",async(req,res)=>{
+router.get("/", async (req, res) => {
   try {
-    const{
+    const {
       minPrice,
-      mmaxPrice,
+      maxPrice,
       discountPrice,
       sortBy,
       category,
@@ -165,11 +160,77 @@ router.get("/",async(req,res)=>{
       collection,
       material,
       gender,
-     search
-    }=req.query;
+      search,
+    } = req.query;
+    let query = {};
+
+    // filter logic
+    if (collection && collection.toLocaleLowerCase() !== "all") {
+      query.collections = collection;
+    }
+    if (category && category.toLocaleLowerCase() !== "all") {
+      query.category = category;
+    }
+    if (material) {
+      query.material = { $in: material.split(",") };
+    }
+    if (brand) {
+      query.brand = { $in: brand.split(",") };
+    }
+    if (size) {
+      query.sizes = { $in: size.split(",") };
+    }
+    if (color) {
+      query.colors = { $in: [color] };
+    }
+    if (gender) {
+      query.gender = gender;
+    }
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) {
+        query.price.$gte = Number(minPrice);
+      }
+      if (maxPrice) {
+        query.price.$gte = Number(maxPrice);
+      }
+    }
+    if (search) {
+      query.$or=[
+          {name:{$regex:search,$options:"i"}},
+          {description:{$regex:search,$options:"i"}},
+      ]
+    }
+
+    // sort logic
+    let sort = {};
+    if (sortBy) {
+      switch(sortBy){
+        case "priceAsc":
+          sort={price:1};
+          break;
+        case "priceDesc":
+          sort={price:-1};
+          break;
+        case "popularity":
+          sort={rating:-1};
+          break;
+          default:
+            break;
+      }
+      
+    }
+
+
+    // fetch product and apply sorting limit
+    let products = await Product.find(query).sort(sort).limit(Number(req.query.limit) || 0);
+
+    res.json(products);
   } catch (error) {
+    console.error(error);
+    res.status(500).send("server error")
     
   }
-})
+});
 
 export default router;
