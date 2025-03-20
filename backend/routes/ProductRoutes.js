@@ -145,6 +145,76 @@ router.delete("/:id", protect, admin, async (req, res) => {
   }
 });
 
+
+
+// let go for best seller
+// access free for user
+router.get("/best-seller",async(req,res)=>{
+  try {
+    const bestSeller=await Product.findOne().sort({rating:-1});
+    if (bestSeller) {
+      res.json(bestSeller);
+    }
+    else{
+      res.status(400).json({message:"No best-seller products!"})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Error fetching best seller" });
+    
+  }
+})
+
+
+// create for new arrivals
+router.get("/new-arrivals",async(req,res)=>{
+
+})
+
+
+// lets go for similar products
+router.get("/similar/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const product =await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    const similarProducts = await Product.find({
+      _id: { $ne: id }, //Exclude the current product id
+      gender: product.gender,
+      category: product.category,
+    }).limit(4);
+
+    res.json(similarProducts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("server error");
+  }
+});
+
+
+
+
+//  /api/products/:id to get product by id
+//access will be public
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).send("product not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("server error");
+  }
+});
+
+
 // get all the product with query filter
 router.get("/", async (req, res) => {
   try {
@@ -226,45 +296,6 @@ router.get("/", async (req, res) => {
       .limit(Number(req.query.limit) || 0);
 
     res.json(products);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("server error");
-  }
-});
-
-//  /api/products/:id to get product by id
-//access will be public
-router.get("/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).send("product not found");
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("server error");
-  }
-});
-
-// lets go for similar products
-router.get("/similar/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  try {
-    const product =await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    const similarProducts = await Product.find({
-      _id: { $ne: id }, //Exclude the current product id
-      gender: product.gender,
-      category: product.category,
-    }).limit(4);
-
-    res.json(similarProducts);
   } catch (error) {
     console.error(error);
     res.status(500).send("server error");
