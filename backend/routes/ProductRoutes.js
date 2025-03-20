@@ -181,7 +181,7 @@ router.get("/", async (req, res) => {
       query.sizes = { $in: size.split(",") };
     }
     if (color) {
-      query.colors = { $in: [color] };
+      query.colors = { $in:color.split(",")};
     }
     if (gender) {
       query.gender = gender;
@@ -234,3 +234,18 @@ router.get("/", async (req, res) => {
 });
 
 export default router;
+
+
+
+// filter logic explain
+// Ye API products fetch karne ke liye hai, jisme filters, sorting aur searching ka support diya gaya hai.
+// 1. Pehle, req.query se sabhi filters ko extract kar rahe hain:
+// 2. Ab query object create kiya ja raha hai jisme different conditions set ki jaayengi:
+// 3. Agar collection "all" nahi hai, toh usi collection ke products dikhayenge.
+// 4. Ye price ka minimum aur maximum range set karega.
+// 5. Case-insensitive search ($options: "i") ka use kiya hai.
+// 6. Agar user sorting select karega, toh usi ke basis pe sort hoga.
+//    ---> priceAsc → Price low to high
+//    ---> priceDesc → Price high to low
+//    ---> popularity → Rating ke basis pe sort hoga
+// 7.  Ye MongoDB se products fetch karega:
