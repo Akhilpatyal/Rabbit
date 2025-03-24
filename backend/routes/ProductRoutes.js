@@ -168,7 +168,15 @@ router.get("/best-seller",async(req,res)=>{
 
 // create for new arrivals
 router.get("/new-arrivals",async(req,res)=>{
-
+  // fetch data from database
+ try {
+  const newArrivals=await Product.find().sort({createdAt:-1}).limit(8);
+  res.json(newArrivals);
+ } catch (error) {
+  console.error(error);
+  res.status(500).send({ message: "Error fetching new arrivals" });
+  
+ }
 })
 
 

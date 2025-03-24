@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "./models/User.js";
+import Cart from "./models/Cart.js"
 import connectDB from "./config/db.js";
 import product from "./models/product.js";
 import Product from "./data/products.js";    //tesing data
@@ -17,6 +18,7 @@ const seedData = async () => {
     // clear existing data
     await product.deleteMany();
     await User.deleteMany();
+    await Cart.deleteMany();
 
     // create a new default admin user
     const adminUser = await User.create({
@@ -29,7 +31,7 @@ const seedData = async () => {
     // assign default data's
     const userId = adminUser._id;
     const sampleProduct = Product.map((product) => {
-      return { ...product, user: userId };
+      return { ...product, user: userId};
     });
 
     // insert product inside the database
