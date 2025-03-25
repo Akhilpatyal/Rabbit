@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import router from "./routes/UserRoutes.js";
 import ProductRouter from "./routes/ProductRoutes.js";
 import CartRouter from "./routes/CartRoutes.js";
+import CheckOutRouter from "./routes/CheckOutRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", router);
 app.use("/api/products", ProductRouter);
 app.use("/api/cart", CartRouter);
+app.use("/api/checkout", CheckOutRouter);
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
