@@ -24,7 +24,7 @@ router.post('/', protect, async (req, res) => {
            shippingAddress,
            paymentMethod,
            totalPrice,
-           paymentSatus:"Pending",
+           paymentStatus:"Pending",
            isPaid:false,
        });
        console.log(`Checkout create for user ${req.user._id}`);
@@ -43,18 +43,19 @@ router.post('/', protect, async (req, res) => {
 // @update checkout to mark as paid after successful payment
 // @access Private
 router.put("/:id/pay", protect, async (req, res) => {
-    const {paymentSatus,paymentDetails} = req.body;
+    const {paymentStatus,paymentDetails} = req.body;
      
     try {
         const checkout=await CheckOut.findById(req.params.id);
+        console.log(checkout);
         if (!checkout) {
             return res.status(404).json({ message: 'Checkout not found' });
         }
         
-        if (paymentSatus==="paid") {
+        if (paymentStatus==="paid") {
             checkout.isPaid=true;
             checkout.paidAt=Date.now();
-            checkout.paymentSatus=paymentSatus;
+            checkout.paymentStatus=paymentStatus;
             checkout.paymentDetails=paymentDetails;
             await checkout.save();
 
@@ -93,7 +94,7 @@ router.post("/:id/finalize", protect, async (req, res) => {
                         isPaid:true,
                         paidAt:checkout.paidAt,
                         isDelivered:false,
-                        paymentSatus:checkout.paymentSatus,
+                        paymentStatus:checkout.paymentStatus,
                         paymentDetails:checkout.paymentDetails,
 
                     });

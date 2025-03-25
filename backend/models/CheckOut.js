@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 const checkOutItemSchema = new mongoose.Schema(
   {
     productId: {
@@ -63,7 +63,7 @@ const checkOutSchema = new mongoose.Schema(
     paidAt: {
       type: Date,
     },
-    paymentSatus: {
+    paymentStatus: {
       type: String,
       default: "pending",
     },

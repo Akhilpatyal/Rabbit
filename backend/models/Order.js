@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 const orderItemsSchema = new mongoose.Schema(
     {
          productId: {
@@ -68,7 +68,7 @@ const orderSchema = new mongoose.Schema(
     paidAt: {
       type: Date,
     },
-    paymentSatus: {
+    paymentStatus: {
       type: String,
       default: "pending",
     },
