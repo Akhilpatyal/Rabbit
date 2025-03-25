@@ -22,7 +22,7 @@ const orderItemsSchema = new mongoose.Schema(
             color:String,
             quantity: {
                 type: Number,
-                required: true,
+                // required: true,
             }
     },{ _id: false }
 );
@@ -74,7 +74,7 @@ const orderSchema = new mongoose.Schema(
     },
     status:{
         type:String,
-        enum:["processing","shipped","delivered","Cancelled"],
+        enum:["Processing","Shipped","Delivered","Cancelled"],
         default:"Processing",
     },
     paymentDetails: {
