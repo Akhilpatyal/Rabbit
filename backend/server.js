@@ -7,6 +7,9 @@ import ProductRouter from "./routes/ProductRoutes.js";
 import CartRouter from "./routes/CartRoutes.js";
 import CheckOutRouter from "./routes/CheckOutRoutes.js";
 import OrderRouter from "./routes/OderRoutes.js";
+import UploadRouter from "./routes/UploadRoutes.js";
+import SubscribeRouter from "./routes/SubscribedRouter.js"
+import adminRouter from "./routes/AdminRouter.js"
 
 // Load environment variables
 dotenv.config();
@@ -41,6 +44,10 @@ app.use("/api/products", ProductRouter);
 app.use("/api/cart", CartRouter);
 app.use("/api/checkout", CheckOutRouter);
 app.use("/api/orders", OrderRouter);
+app.use("/api/upload", UploadRouter);
+app.use("/api", SubscribeRouter);
+
+app.use("/api/admin/users", adminRouter);
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
