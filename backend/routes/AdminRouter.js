@@ -56,4 +56,20 @@ router.put("/:id", protect, admin, async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+
+// @route Delete/api/admin/users/:id
+router.delete("/:id", protect, admin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      await user.deleteOne();
+      res.json({ message: "User removed successfully" });
+    }else{
+      res.status(404).json({message:"User not found"})
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 export default router;
