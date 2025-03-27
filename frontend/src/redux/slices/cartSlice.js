@@ -3,7 +3,7 @@ import axios from "axios";
 
 // helper function to load cart from localstorage
 const loadCartFromStorage = () => {
-  const storedCart = localStorage.getItems("cart");
+  const storedCart = localStorage.getItem("cart");
   return storedCart ? JSON.parse(storedCart) : { products: [] };
 };
 
@@ -26,7 +26,9 @@ export const fetchCart = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(
+        error.response?.data || { message: "An unknown error occurred" }
+      );
     }
   }
 );
@@ -149,7 +151,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "failed to fetch cart";
       })
-//  ////////add to cart
+      //  ////////add to cart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -164,11 +166,9 @@ const cartSlice = createSlice({
         state.error = action.payload?.message || "failed to add cart";
       })
 
+      //   update Cart items quantity
 
-
-    //   update Cart items quantity
-
-    .addCase(updateCartItemQuantity.pending, (state) => {
+      .addCase(updateCartItemQuantity.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -179,12 +179,12 @@ const cartSlice = createSlice({
       })
       .addCase(updateCartItemQuantity.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "failed to update item quantity";
+        state.error =
+          action.payload?.message || "failed to update item quantity";
       })
 
-
-    //   remove
-    .addCase(removeFromCart.pending, (state) => {
+      //   remove
+      .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -198,9 +198,9 @@ const cartSlice = createSlice({
         state.error = action.payload?.message || "failed to remove items";
       })
 
-    //   merge
+      //   merge
 
-    .addCase(mergeCart.pending, (state) => {
+      .addCase(mergeCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -215,5 +215,5 @@ const cartSlice = createSlice({
       });
   },
 });
-export const {cleanCart}=cartSlice.actions;
+export const { cleanCart } = cartSlice.actions;
 export default cartSlice.reducer;
