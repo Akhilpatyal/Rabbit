@@ -1,54 +1,17 @@
 import { useEffect, useState } from "react";
 import {toast} from "sonner"
 import ProductGrid from "./ProductGrid";
-const selectedProducts = {
-  name: "Stylish Jacket",
-  price: 120,
-  originalPrice: 150,
-  description: "This is a stylish jacket perfect for any occasion",
-  brand: "Fashion Brand",
-  material: "Leather",
-  sizes: ["S", "M", "L", "XL", "XXL"],
-  colors: ["Black", "White", "Grey"],
-  images: [
-    {
-      url: "https://picsum.photos/500/500?random=1",
-      altText: "Stylish Jacket",
-    },
-    {
-      url: "https://picsum.photos/500/500?random=2",
-      altText: "Stylish Jacket",
-    },
-  ],
-};
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const similarProducts=[
-  {
-    _id:1,
-    name:"Product 1",
-    price:100,
-    images:[{url:"https://picsum.photos/500/500?random=3"}]
-  },
-  {
-    _id:2,
-    name:"Product 2",
-    price:100,
-    images:[{url:"https://picsum.photos/500/500?random=4"}]
-  },
-  {
-    _id:3,
-    name:"Product 3",
-    price:100,
-    images:[{url:"https://picsum.photos/500/500?random=5"}]
-  },
-  {
-    _id:4,
-    name:"Product 4",
-    price:100,
-    images:[{url:"https://picsum.photos/500/500?random=6"}]
-  },
-]
-const ProductDetails = () => {
+// update during integration
+
+const ProductDetails = ({productId}) => {
+  const {id}=useParams();
+  const dispatch=useDispatch();
+  const {selectedProduct,loading,error,similarProducts}=useSelector(
+    (state)=>state.products
+  );
   const [mainImage, setMainImage] = useState("https://picsum.photos/500/500?random=6");
 
   const [selectedSize,setSelectedSize]=useState("");
