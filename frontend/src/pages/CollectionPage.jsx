@@ -3,8 +3,14 @@ import { FaFilter } from "react-icons/fa6";
 import FilterSideBar from "../components/Products/FilterSideBar";
 import SortOption from "../components/Products/SortOption";
 import ProductGrid from "../components/Products/ProductGrid";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const CollectionPage = () => {
+  const {collection}=useParams();
+  const {searchParams}=useSearchParams();
+  const dispatch=useDispatch();
+  const {products , loading, error}= useSelector((state)=>state.products);
     const [products, setProducts] = useState([]);
     const slideRef = useRef(null);
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);

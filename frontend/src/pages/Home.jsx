@@ -6,20 +6,19 @@ import NewArrivals from "../components/Products/NewArrivals";
 import ProductDetails from "../components/Products/ProductDetails";
 import ProductGrid from "../components/Products/ProductGrid";
 import { useDispatch, useSelector } from "react-redux";
+import {fetchProductsByFilters} from "../redux/slices/productSlice.js"
 import axios from "axios";
 
 const Home = () => {
   // changes during integration
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => {
-    state.products;
-  });
+  const { products, loading, error } = useSelector((state) => state.products);
   const [bestSellerProduct, setBestSellerProduct] = useState(null);
 
   useEffect(() => {
     dispatch(
-      fetchProductByFilter({
-        gneder: "Women",
+      fetchProductsByFilters({
+        gender: "Women",
         category: "Bottom Wear",
         limit: 8,
       })
