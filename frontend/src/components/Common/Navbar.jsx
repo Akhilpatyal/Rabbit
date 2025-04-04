@@ -5,9 +5,13 @@ import { GiCrossMark } from "react-icons/gi";
 import SearchBar from "./SearchBar";
 import CartDrawer from "../Layout/CartDrawer";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+  const {cart}= useSelector((state)=>state.cart);
+
+  const cartItemCount=cart?.products?.reduce((total, product) => total + product.quantity, 0) || 0;
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -65,9 +69,10 @@ const Navbar = () => {
           </Link>
           <button onClick={toggleDrawer} className="relative hover:text-black">
             <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
-            <span className="absolute bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5 -top-1">
-              4
-            </span>
+            {cartItemCount > 0 && ( <span className="absolute bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5 -top-1">
+              {cartItemCount}
+            </span>)}
+           
           </button>
           {/* search icon */}
           <div className="overflow-hidden">

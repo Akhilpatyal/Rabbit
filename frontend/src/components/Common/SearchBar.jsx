@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 import { GiCrossMark } from "react-icons/gi";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchProductsByFilters, setFilter } from "../../redux/slices/productSlice";
 const SearchBar = () => {
   // usestate
   const [searchItems, setSearchItems] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const handleSearchToggle = () => {    
     setIsOpen(!isOpen);
   }
   const handleSearch = (e) => { 
       e.preventDefault();
-      console.log(`Search value : ${searchItems}`);
+      // console.log(`Search value : ${searchItems}`);
+      dispatch(setFilter({search:searchItems}));
+      dispatch(fetchProductsByFilters({search:searchItems}));
+      navigate(`/collections/all?search=${searchItems}`);
       setIsOpen(false);
   }
   return (

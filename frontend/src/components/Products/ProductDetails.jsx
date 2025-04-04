@@ -5,7 +5,7 @@ import ProductGrid from "./ProductGrid";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductDetails,fetchSimilarProducts } from "../../redux/slices/productSlice.js"; // Adjust the path as needed
-import addToCart from "../../redux/slices/cartSlice.js";
+import {addToCart} from "../../redux/slices/cartSlice.js";
 
 const ProductDetails = ({ productId }) => {
   const { id } = useParams();
