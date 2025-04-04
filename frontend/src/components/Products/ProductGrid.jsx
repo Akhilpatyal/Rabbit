@@ -13,7 +13,7 @@ const ProductGrid = ({ products, loading, error }) => {
       {products.map((product, index) => (
         <Link
           key={index}
-          to={`/product/${product.id}`}
+          to={`/product/${product._id}`}
           className="block shadow-2xl rounded-lg"
         >
           <div className="bg-white p-2 rounded-lg">
